@@ -1,12 +1,10 @@
 import pandas as pd
 import re
+from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 
-train = pd.read_csv("data/labeledTrainData.tsv", header=0,
-                    delimiter="\t", quoting=3)
 
-
-def review_to_list(raw_review):
+def review_to_list(raw_review, remove_stopwords):
     """ convert a raw review to a list of words"""
     # Remove HTML
     review_text = BeautifulSoup(raw_review, "html.parser").get_text()
@@ -15,16 +13,12 @@ def review_to_list(raw_review):
     letters_only = re.sub("[^a-zA-Z]", " ", review_text)
     words = letters_only.lower().split()
 
+    if remove_stopwords:
+        # Get rid of stop words
+        stops = set(stopwords.words("english"))
+        words = [w for w in words if w not in stops]
+
     return words
-
-
-reviews = []
-
-for i in range(train["review"].size):
-    reviews.append(review_to_list(train["review"][i]))
-
-
-print(reviews[0])
 
 
 def build_dictionary(review_list):
@@ -47,6 +41,14 @@ def build_data(dictionary, review_list):
     return data
 
 
-dictionary = build_dictionary(reviews)
-data = build_data(dictionary, reviews)
-print(data[0])
+def get_data(remove_stopwords=False):
+    reviews = []
+    train = pd.read_csv("data/labeledTrainData.tsv", header=0,
+                        delimiter="\t", quoting=3)
+
+    for i in range(train["review"].size):
+        reviews.append(review_to_list(train["review"][i], remove_stopwords))
+
+    dictionary = build_dictionary(reviews)
+    data = build_data(dictionary, reviews)
+    return data, train["sentiment"], dictionary
