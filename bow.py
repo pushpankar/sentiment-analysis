@@ -8,7 +8,6 @@ data, sentiments, dictionary, reverse_dict = get_data(remove_stopwords=True)
 if not os.path.isfile('data/bow.pickle'):
     # Create dataframe
     review_df = pd.DataFrame(0, columns=[0, 1], index=dictionary.keys())
-    print(review_df.head())
 
     # create Bag of words
     for review, sentiment in zip(data, sentiments):
@@ -23,13 +22,13 @@ else:
     with open('data/bow.pickle', 'rb') as f:
         review_df = pickle.load(f)
 
-print(review_df.head(35))
 
 # classify using Naive bayes
 pred_sentiment = []
+counts = review_df.sum(axis=0)
+p_positive = counts[0] / (counts[0] + counts[1])
+p_negative = counts[1] / (counts[0] + counts[1])
 for review in data:
-    p_positive = 1
-    p_negative = 1
     for word in review:
         p_negative *= review_df.loc[reverse_dict[word]][0]
         p_positive *= review_df.loc[reverse_dict[word]][1]
