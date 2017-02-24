@@ -23,11 +23,14 @@ def review_to_list(raw_review, remove_stopwords):
 
 def build_dictionary(review_list):
     dictionary = dict()
+    reverse_dictionary = dict()
     for review in review_list:
         for word in review:
             if word not in dictionary:
                 dictionary[word] = len(dictionary)
-    return dictionary
+    for key, value in dictionary.items():
+        reverse_dictionary[value] = key
+    return dictionary, reverse_dictionary
 
 
 def build_data(dictionary, review_list):
@@ -49,6 +52,6 @@ def get_data(remove_stopwords=False):
     for i in range(train["review"].size):
         reviews.append(review_to_list(train["review"][i], remove_stopwords))
 
-    dictionary = build_dictionary(reviews)
+    dictionary, reverse_dictionary = build_dictionary(reviews)
     data = build_data(dictionary, reviews)
-    return data, train["sentiment"], dictionary
+    return data, train["sentiment"], dictionary, reverse_dictionary
