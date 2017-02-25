@@ -69,6 +69,7 @@ with graph.as_default():
     valid_embeddings = tf.nn.embedding_lookup(normalized_embedding,
                                               valid_dataset)
     similarity = tf.matmul(valid_embeddings, tf.transpose(normalized_embedding))
+    saver = tf.train.Saver({"embedding": embedding})
 
 # Train model
 num_steps = 100001
@@ -104,3 +105,5 @@ with tf.Session(graph=graph) as session:
                     log = '%s %s,' % (log, close_word)
                 print(log)
     final_embeddings = normalized_embedding.eval()
+    path = saver.save(session, "data/embedding.ckpt")
+    print("model saved in file {}".format(path))
