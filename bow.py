@@ -1,6 +1,7 @@
 from data import get_data
 import pickle
 import pandas as pd
+import numpy as np
 import os
 
 data, sentiments, dictionary, reverse_dict = get_data(remove_stopwords=True)
@@ -23,24 +24,21 @@ else:
 
 # classify using Naive bayes
 pred_sentiment = []
+# review_df = review_df.divide(review_df.sum(axis=1), axis=0)
+print(review_df.head())
 counts = review_df.sum(axis=0)
-review_df = review_df / counts
 print(counts)
-prior_positive = counts[0] / (counts[0] + counts[1])
-prior_negative = counts[1] / (counts[0] + counts[1])
-for review in data[:10]:
+for review in data:
+    prior_positive = np.log(counts[0]) - np.log(counts[0] + counts[1])
+    prior_negative = np.log(counts[1]) - np.log(counts[0] + counts[1])
     for word in review:
-        prior_negative *= review_df.loc[reverse_dict[word]][0]
-        prior_positive *= review_df.loc[reverse_dict[word]][1]
-    print(prior_negative)
-    print(prior_positive)
+        prior_negative += np.log(review_df.loc[reverse_dict[word]][0] + 1) - np.log(counts[0])
+        prior_positive += np.log(review_df.loc[reverse_dict[word]][1] + 1) - np.log(counts[1])
     if prior_positive > prior_negative:
         pred_sentiment.append(1)
     else:
         pred_sentiment.append(0)
 
-print(pred_sentiment)
-print(sentiments[:10])
-correct_pred = pd.Series(pred_sentiment) == sentiments[:10]
-accuracy = correct_pred.sum() / len(sentiments)
+correct_pred = pd.Series(pred_sentiment) == sentiments
+accuracy = correct_pred.sum() / len(pred_sentiment)
 print(accuracy)
