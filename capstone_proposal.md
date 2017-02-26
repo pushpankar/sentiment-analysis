@@ -8,7 +8,7 @@ February 26th, 2017
 ### Domain Background
 
 There is huge amount of text on the web. Most of the information is in the form of text. Text is also the most commonly used method for tele-communication. Organizing and classifying these texts is more important than ever. It can be used to find interesting article for a user, discard irrelevant information, and word sense disambiguation. Doing this by hand is very time consuming and difficult. Since early 90's machine learning has gained popularity for this task. I will be comparing traditional machine learning approach and deep learning for text classification.
-A comparision of traditional machine learing approaches has been done by Bo Pang and Lillian Lee et al.1 and Andrew L. Maas et al. has used supervised and unsupervised learning techniques for sentiment analysis in his paper2.
+A comparision of traditional machine learing approaches has been done by Bo Pang and Lillian Lee et al.1. Andrew L. Maas et al. has used supervised and unsupervised learning techniques for sentiment analysis in his paper2.
 Classifying text is the first step towards building AI agents that can properly communicate with humans.
  
 ### Problem Statement
@@ -21,7 +21,7 @@ I will be using IMDB movie review dataset for sentiment analysis. This dataset i
 
 This dataset is suitable for my sentiment analysis task as in both cases we need to classify text as positive or negative. I will use this dataset to train model and then test them on my own text.
 
-I got this dataset from Kaggle.com.
+I got this dataset from Kaggle.com3.
 
 ### Solution Statement
 
@@ -49,6 +49,6 @@ Then, I will predict sentiments using natural language processing techniques. I 
 Then finally I will compare these different models based on their accuracy.
 
 -----------
-Data Source:- https://www.kaggle.com/c/word2vec-nlp-tutorial/data
 1 – Thumbs up? Sentiment Classification using machine learning Techniques. http://www.aclweb.org/anthology/W02-1011
 2 – Learning word vectors for sentiment analysis.
+3 - Data Source:- https://www.kaggle.com/c/word2vec-nlp-tutorial/data
