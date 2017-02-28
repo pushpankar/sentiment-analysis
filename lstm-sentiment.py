@@ -28,11 +28,10 @@ model.add(Dense(1))
 model.add(Activation('sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy',
-              metrics=['accuracy'])
+              metrics=['precision', 'recall', 'accuracy', 'fmeasure'])
 
 print('Train...')
-model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=15,
+model.fit(X_train, y_train, batch_size=batch_size, nb_epoch=3,
           validation_data=(X_test, y_test))
-score, acc = model.evaluate(X_test, y_test, batch_size=batch_size)
+score = model.evaluate(X_test, y_test, batch_size=batch_size)
 print('Test score: {}'.format(score))
-print('Test accuracy: {}'.format(acc))

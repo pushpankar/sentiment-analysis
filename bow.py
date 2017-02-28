@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 import numpy as np
 import os
-
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 data, sentiments, dictionary, reverse_dict = get_data(remove_stopwords=True)
 
 if not os.path.isfile('data/bow.pickle'):
@@ -39,6 +39,11 @@ for review in data:
     else:
         pred_sentiment.append(0)
 
-correct_pred = pd.Series(pred_sentiment) == sentiments
-accuracy = correct_pred.sum() / len(pred_sentiment)
+accuracy = accuracy_score(sentiments, pred_sentiment)
+precision = precision_score(sentiments, pred_sentiment)
+recall = recall_score(sentiments, pred_sentiment)
+fmeasure = f1_score(sentiments, pred_sentiment)
 print(accuracy)
+print(precision)
+print(recall)
+print(fmeasure)
