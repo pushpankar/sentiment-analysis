@@ -9,7 +9,7 @@ from keras.datasets import imdb
 
 np.random.seed(108)
 max_features = 30000
-maxlen = 120
+maxlen = 512
 batch_size = 32
 
 (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=max_features)
