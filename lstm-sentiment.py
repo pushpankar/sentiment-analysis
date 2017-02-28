@@ -8,10 +8,11 @@ from keras.layers import LSTM
 from keras.datasets import imdb
 
 np.random.seed(108)
-max_features = 30000
-maxlen = 512
+max_features = 30000  # Vocabulary size
+maxlen = 512  # max words in a review
 batch_size = 32
 
+# Read data
 (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=max_features)
 print("train size-{}".format(len(X_train)))
 print("test size-{}".format(len(X_test)))

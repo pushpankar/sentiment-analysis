@@ -8,9 +8,10 @@ from keras.preprocessing import sequence
 
 
 np.random.seed(8)
-top_words = 5000
+top_words = 5000  # Vocubulary size
+# Read Data
 (X_train, y_train), (X_test, y_test) = imdb.load_data(nb_words=top_words)
-max_words = 512
+max_words = 512  # Max words in a review
 X_train = sequence.pad_sequences(X_train, maxlen=max_words)
 X_test = sequence.pad_sequences(X_test, maxlen=max_words)
 
@@ -23,6 +24,7 @@ model.add(MaxPooling1D(pool_length=2))
 model.add(Flatten())
 model.add(Dense(256, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
+
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['precision', 'recall', 'accuracy', 'fmeasure'])
 print(model.summary)
 

@@ -6,6 +6,7 @@ import os
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 data, sentiments, dictionary, reverse_dict = get_data(remove_stopwords=True)
 
+# Save DataFrame to avoid counting of words multiple times
 if not os.path.isfile('data/bow.pickle'):
     # Create dataframe
     review_df = pd.DataFrame(0, columns=[0, 1], index=dictionary.keys())
@@ -24,11 +25,11 @@ else:
 
 # classify using Naive bayes
 pred_sentiment = []
-# review_df = review_df.divide(review_df.sum(axis=1), axis=0)
-print(review_df.head())
+# Count number of words in each class
 counts = review_df.sum(axis=0)
 print(counts)
 for review in data:
+    # Compute prior of a class
     prior_positive = np.log(counts[0]) - np.log(counts[0] + counts[1])
     prior_negative = np.log(counts[1]) - np.log(counts[0] + counts[1])
     for word in review:
@@ -39,6 +40,7 @@ for review in data:
     else:
         pred_sentiment.append(0)
 
+# Calculate scores
 accuracy = accuracy_score(sentiments, pred_sentiment)
 precision = precision_score(sentiments, pred_sentiment)
 recall = recall_score(sentiments, pred_sentiment)

@@ -22,6 +22,10 @@ def review_to_list(raw_review, remove_stopwords):
 
 
 def build_dictionary(review_list):
+    """Assign an id to every new words and store them in dictionary
+        Use dictionary for getting ID from word and reverse_dictionary for
+        getting word from ID
+    """
     dictionary = dict()
     reverse_dictionary = dict()
     for review in review_list:
@@ -34,6 +38,7 @@ def build_dictionary(review_list):
 
 
 def build_data(dictionary, review_list):
+    """ Convert a list of word to a list of words IDs"""
     data = list()
     for review in review_list:
         review_as_num = []
@@ -45,6 +50,7 @@ def build_data(dictionary, review_list):
 
 
 def get_data(remove_stopwords=False):
+    """ read data from disk and preprocess them"""
     reviews = []
     train = pd.read_csv("data/labeledTrainData.tsv", header=0,
                         delimiter="\t", quoting=3)
