@@ -11,5 +11,5 @@ Following libraries are required:
 5. Sklearn  
 6. Keras  
 
-Full report of this research is in [report.pdf](../blob/master/Capstone-report.pdf)  
+Full report of this research is in [report.pdf](../master/Capstone-report.pdf)  
 I am using IMDB movie review [dataset](https://www.kaggle.com/c/word2vec-nlp-tutorial/data)
